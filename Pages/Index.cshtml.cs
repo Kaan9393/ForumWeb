@@ -1,4 +1,8 @@
-﻿using ForumWeb.Models;
+﻿using ForumWeb.Areas.Identity.Data;
+using ForumWeb.Gateway;
+using ForumWeb.Models;
+using ForumWeb.Models.IModels;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
@@ -14,54 +18,37 @@ namespace ForumWeb.Pages
     public class IndexModel : PageModel
     {
         private readonly ILogger<IndexModel> _logger;
-        public Category Category { get; set; }
-        public SubCategory SubCategory { get; set; }
-        public Post Post { get; set; }
-        public Comment Comment { get; set; }
 
-        public IndexModel(ILogger<IndexModel> logger)
+        private readonly ICategory _categoryGateway;
+        private readonly UserManager<ForumWebUser> _userManager;
+
+        public List<Category> categories;
+
+        public ForumWebUser MyUser { get; set; }
+
+        [BindProperty]
+        public Category NewOrChangedCategory { get; set; }
+
+
+        public IndexModel(ILogger<IndexModel> logger, UserManager<ForumWebUser> userManager ,ICategory categoryGateway)
         {
             _logger = logger;
+            _userManager = userManager;
+            _categoryGateway = categoryGateway;
         }
 
-        public async void OnGetAsync()
+        public async Task<IActionResult> OnGetAsync()
         {
-            
+            MyUser = await _userManager.GetUserAsync(User);
+            return Page();
+            //categories = await _categoryGateway.GetCategories();
+        }
 
-            var client = new HttpClient();
+        public async Task<IActionResult> OnPostAsync()
+        {
+            await _categoryGateway.PostCategory(NewOrChangedCategory);
 
-            var options = new JsonSerializerOptions
-            {
-                PropertyNameCaseInsensitive = true
-            };
-
-            //Category API
-            Task<string> getCategoryString = client.GetStringAsync($"https://localhost:44341/api/Categories");
-            string categoryString = await getCategoryString;
-            Category = JsonSerializer.Deserialize<Category>(categoryString, options);
-            //<---
-
-
-            //SubCategory API
-            Task<string> getSubCatString = client.GetStringAsync($"https://localhost:44341/api/SubCategories");
-            string subCatString = await getCategoryString;
-            SubCategory = JsonSerializer.Deserialize<SubCategory>(subCatString, options);
-            //<---
-
-
-            //Post API
-            Task<string> getPostString = client.GetStringAsync($"https://localhost:44341/api/Posts");
-            string postString = await getPostString;
-            Post = JsonSerializer.Deserialize<Post>(postString, options);
-            //<---
-
-
-            //Comment API
-            Task<string> getCommentString = client.GetStringAsync($"https://localhost:44341/api/Comments");
-            string commentString = await getCommentString;
-            Comment = JsonSerializer.Deserialize<Comment>(commentString, options);
-            //<---
-
+            return RedirectToPage("./Index");
         }
     }
 }

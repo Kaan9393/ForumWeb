@@ -1,10 +1,30 @@
 ﻿@page
 @model IndexModel
+
 @{
     ViewData["Title"] = "Home page";
 }
 
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+
+    @if (Model.MyUser != null)
+    {
+
+        <form method="post">
+            <label for="Text">Txt</label><br />
+            <input asp-for="NewOrChangedCategory" />
+            <input type="submit" value="Save" />
+
+
+        </form>
+    }
+    else
+    {
+        <p>Logga in för att göra inlägg</p>
+    }
+
+
+
+
 </div>
