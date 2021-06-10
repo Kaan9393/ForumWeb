@@ -5,11 +5,13 @@ using System.Threading.Tasks;
 
 namespace ForumWeb.Models.IModels
 {
-    interface IPost
+    public interface IPost
     {
         Task<List<Post>> GetPosts();
+        Task<List<Post>> GetPostsBySubCategoryId(Guid subCategoryId);
+        Task<Post> GetOnePostByPostId(Guid postId);
         Task<Post> PostPosts(Post post);
-        Task PutPost(int editId, Post post);
-        Task<Post> DeletePost(int deleteId);
+        Task PutPost(Guid editId, Post post);
+        Task DeletePost(Guid deleteId);
     }
 }

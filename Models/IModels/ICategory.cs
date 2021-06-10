@@ -9,7 +9,7 @@ namespace ForumWeb.Models.IModels
     {
         Task<List<Category>> GetCategories();
         Task<Category> PostCategory(Category category);
-        Task PutCategory(int editId, Category category);
-        Task<Category> DeleteCategory(int deleteId);
+        Task PutCategory(Guid editId, Category category);
+        Task DeleteCategory(Guid DeleteCatId);
     }
 }

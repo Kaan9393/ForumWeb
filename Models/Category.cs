@@ -9,7 +9,7 @@ namespace ForumWeb.Models
     public class Category
     {
         [JsonPropertyName("id")]
-        public string Id { get; set; }
+        public Guid Id { get; set; }
 
         [JsonPropertyName("text")]
         public string Text { get; set; }

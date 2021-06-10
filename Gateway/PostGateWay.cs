@@ -28,6 +28,20 @@ namespace ForumWeb.Gateway
             string apiResponse = await response.Content.ReadAsStringAsync();
             return JsonSerializer.Deserialize<List<Post>>(apiResponse);
         }
+        public async Task<List<Post>> GetPostsBySubCategoryId(Guid subCategoryId)
+        {
+            var response = await _httpClient.GetAsync("https://localhost:44341/api/Posts" + "/SubCategoryId/" + subCategoryId );
+            string apiResponse = await response.Content.ReadAsStringAsync();
+            return JsonSerializer.Deserialize<List<Post>>(apiResponse);
+        }
+
+        //Get one post to write comments in
+        public async Task<Post> GetOnePostByPostId(Guid postId)
+        {
+            var response = await _httpClient.GetAsync("https://localhost:44341/api/Posts"+ "/" + postId);
+            string apiResponse = await response.Content.ReadAsStringAsync();
+            return JsonSerializer.Deserialize<Post>(apiResponse);
+        }
 
         public async Task<Post> PostPosts(Post post)
         {
@@ -37,24 +51,19 @@ namespace ForumWeb.Gateway
             return returnValue;
         }
 
-        public async Task<Post> DeletePost(int deleteId)
+
+        public async Task DeletePost(Guid deleteId)
         {
             var response = await _httpClient.DeleteAsync("https://localhost:44341/api/Posts" + "/" + deleteId);
-            Post returnValue = await response.Content.ReadFromJsonAsync<Post>();
+            //Post returnValue = await response.Content.ReadFromJsonAsync<Post>();
 
-            return returnValue;
+            //return returnValue;
         }
 
-        public async Task PutPost(int editId, Post post)
+        public async Task PutPost(Guid editId, Post post)
         {
             await _httpClient.PutAsJsonAsync("https://localhost:44341/api/Posts" + "/" + editId, post);
         }
 
-
-        ////Post API
-        //Task<string> getPostString = client.GetStringAsync($"https://localhost:44341/api/Posts");
-        //string postString = await getPostString;
-        //Post = JsonSerializer.Deserialize<Post>(postString, options);
-        //    //<---
     }
 }

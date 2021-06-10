@@ -5,11 +5,12 @@ using System.Threading.Tasks;
 
 namespace ForumWeb.Models.IModels
 {
-    interface IComment
+    public interface IComment
     {
         Task<List<Comment>> GetComments();
+        Task<List<Comment>> GetCommentsByPostId(Guid postId);
         Task<Comment> PostComment(Comment comment);
-        Task PutComment(int editId, Comment comment);
-        Task<Comment> DeleteComment(int deleteId);
+        Task PutComment(Guid editId, Comment comment);
+        Task DeleteComment(Guid deleteId);
     }
 }

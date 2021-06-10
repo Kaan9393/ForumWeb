@@ -5,26 +5,17 @@
     ViewData["Title"] = "Home page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
+<div class="row">
+    <div class="col-12">
+        <h1>Kaans Forum</h1> <br />
 
-    @if (Model.MyUser != null)
-    {
-
-        <form method="post">
-            <label for="Text">Txt</label><br />
-            <input asp-for="NewOrChangedCategory" />
-            <input type="submit" value="Save" />
+        @foreach (var category in Model.Categories)
+        {
+            <a asp-page="SubCatPage" asp-route-categoryId="@category.Id"> <h5>@category.Text</h5> </a>
+        }
 
 
-        </form>
-    }
-    else
-    {
-        <p>Logga in för att göra inlägg</p>
-    }
-
-
+    </div>
 
 
 </div>

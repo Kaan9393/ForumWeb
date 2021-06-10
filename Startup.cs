@@ -29,9 +29,28 @@ namespace ForumWeb
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            
             services.AddHttpClient<CategoryGateWay>();
             services.AddScoped<ICategory,CategoryGateWay>();
-            services.AddRazorPages();
+
+            services.AddHttpClient<SubCategoryGateWay>();
+            services.AddScoped<ISubCategory, SubCategoryGateWay>();
+
+            services.AddHttpClient<PostGateWay>();
+            services.AddScoped<IPost, PostGateWay>();
+
+            services.AddHttpClient<CommentGateWay>();
+            services.AddScoped<IComment, CommentGateWay>();
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("BeAdmin",
+                    policy => policy.RequireRole("Admin"));
+            });
+
+            services.AddRazorPages(options => {
+                options.Conventions.AuthorizeFolder("/Admin", "BeAdmin");
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

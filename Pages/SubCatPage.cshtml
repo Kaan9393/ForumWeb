@@ -1,0 +1,15 @@
+﻿@page
+@model ForumWeb.Pages.SubCatPageModel
+@{
+}
+
+<div>
+
+    @foreach (var category in Model.Categories)
+    {
+        @foreach (var subCat in Model.SubCategories.Where(s => s.CategoryId == category.Id))
+        {
+            <a asp-page="PostPage" asp-route-subCategoryId="@subCat.Id"> <h5>@subCat.Text</h5> </a>
+        }
+    }
+</div>

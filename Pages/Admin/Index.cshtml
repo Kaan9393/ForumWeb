@@ -1,4 +1,114 @@
 ﻿@page
 @model ForumWeb.Pages.Admin.IndexModel
 @{
+    ViewData["Title"] = "Admin Page";
 }
+
+<h1>Create Categories</h1>
+<form method="post" asp-page-handler="CategoryAdd">
+    <label asp-for="NewCategory.Text">New Category</label><br />
+    <input asp-for="NewCategory.Text" />
+    <input type="submit" value="Save" />
+
+</form>
+
+
+
+
+<table class="table-bordered">
+    <thead>
+        <tr>
+            <th>Category</th>
+            <th>ID</th>
+            <th>Delete</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var category in Model.Categories)
+        {
+            <tr>
+                <td>@category.Text</td>
+                <td>@category.Id</td>
+                <td>
+                    <a href="?DeleteCatId=@category.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+<h1>Create SubCategory</h1>
+<form method="post" asp-page-handler="SubCategoryAdd">
+    <label asp-for="NewSubCategory.Text">New SubCategory</label><br />
+    <input asp-for="NewSubCategory.Text" />
+    <select asp-for="NewSubCategory.CategoryId" asp-items="Model.SelectList"></select>
+    <input type="submit" value="Save" />
+</form>
+
+<table class="table-bordered">
+    <thead>
+        <tr>
+            <th>SubCategory</th>
+            <th>ID</th>
+            <th>Delete</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var subCat in Model.SubCategories)
+        {
+            <tr>
+                <td>@subCat.Text</td>
+                <td>@subCat.Id</td>
+                <td>
+                    <a href="?DeleteSubCatId=@subCat.Id">Delete</a>
+                </td>
+            </tr>
+        }
+
+    </tbody>
+</table>
+<br />
+
+<h1>Connected Cat/SubCat</h1>
+<div class="row">
+
+    <div class="col-12">
+
+        @foreach (var category in Model.Categories)
+        {
+            <h4 style="color:red">@category.Text</h4>
+
+            @foreach (var subCategory in Model.SubCategories.Where(s => s.CategoryId == category.Id))
+            {
+                <h6>@subCategory.Text</h6>
+            }
+
+        }
+    </div>
+</div>
+
+
+
+
+
+
+
+
+@*@foreach (var category in Model.Categories)
+    {
+        <tr>
+            <td>@category.Text</td>
+            <td>@category.Id</td>
+            <td>
+                <a href="?DeleteCatId=@category.Id">Delete</a>
+            </td>
+            @foreach (var subCat in Model.SubCategories.Where(s => s.CategoryId == category.Id))
+            {
+                <td>
+                    @subCat.Text
+                </td>
+            }
+        </tr>
+    }*@

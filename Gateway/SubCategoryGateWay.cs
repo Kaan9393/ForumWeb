@@ -29,6 +29,15 @@ namespace ForumWeb.Gateway
             return JsonSerializer.Deserialize<List<SubCategory>>(apiResponse);
         }
 
+        public async Task<List<SubCategory>> GetAllSubCategoriesById(Guid categoryId)
+        {
+            var response = await _httpClient.GetAsync("https://localhost:44341/api/SubCategories" + "/CategoryId/" + categoryId);
+            string apiResponse = await response.Content.ReadAsStringAsync();
+            return JsonSerializer.Deserialize<List<SubCategory>>(apiResponse);
+        }
+
+        //string text, guid categoryId.
+        //new {Text = text, CategoryId = categoryId })
         public async Task<SubCategory> PostSubCategory(SubCategory subCategory)
         {
             var response = await _httpClient.PostAsJsonAsync("https://localhost:44341/api/SubCategories", subCategory);
@@ -37,15 +46,15 @@ namespace ForumWeb.Gateway
             return returnValue;
         }
 
-        public async Task<SubCategory> DeleteSubCategory(int deleteId)
+        public async Task DeleteSubCategory(Guid deleteId)
         {
             var response = await _httpClient.DeleteAsync("https://localhost:44341/api/SubCategories" + "/" + deleteId);
-            SubCategory returnValue = await response.Content.ReadFromJsonAsync<SubCategory>();
+            //SubCategory returnValue = await response.Content.ReadFromJsonAsync<SubCategory>();
 
-            return returnValue;
+            //return returnValue;
         }
 
-        public async Task PutSubCategory(int editId, SubCategory subCategory)
+        public async Task PutSubCategory(Guid editId, SubCategory subCategory)
         {
             await _httpClient.PutAsJsonAsync("https://localhost:44341/api/SubCategories" + "/" + editId, subCategory);
         }

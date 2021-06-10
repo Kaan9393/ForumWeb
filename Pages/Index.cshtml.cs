@@ -17,38 +17,20 @@ namespace ForumWeb.Pages
 {
     public class IndexModel : PageModel
     {
-        private readonly ILogger<IndexModel> _logger;
-
         private readonly ICategory _categoryGateway;
-        private readonly UserManager<ForumWebUser> _userManager;
 
-        public List<Category> categories;
-
-        public ForumWebUser MyUser { get; set; }
-
-        [BindProperty]
-        public Category NewOrChangedCategory { get; set; }
-
-
-        public IndexModel(ILogger<IndexModel> logger, UserManager<ForumWebUser> userManager ,ICategory categoryGateway)
+        public IndexModel(ICategory categoryGateway)
         {
-            _logger = logger;
-            _userManager = userManager;
             _categoryGateway = categoryGateway;
         }
 
-        public async Task<IActionResult> OnGetAsync()
+        public List<Category> Categories { get; set; }
+
+        public async Task OnGetAsync()
         {
-            MyUser = await _userManager.GetUserAsync(User);
-            return Page();
-            //categories = await _categoryGateway.GetCategories();
+            Categories = await _categoryGateway.GetCategories();
         }
 
-        public async Task<IActionResult> OnPostAsync()
-        {
-            await _categoryGateway.PostCategory(NewOrChangedCategory);
 
-            return RedirectToPage("./Index");
-        }
     }
 }
