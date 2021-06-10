@@ -16,15 +16,13 @@ namespace ForumWeb.Pages
         private readonly IPost _postGateway;
         private readonly IComment _commentGateway;
         private readonly UserManager<ForumWebUser> _userManager;
-        private readonly ISubCategory _subCatGateway;
 
 
-        public CommentPageModel(IPost postGateway, IComment commentGateway ,UserManager<ForumWebUser> userManager, ISubCategory subCatGateway)
+        public CommentPageModel(IPost postGateway, IComment commentGateway ,UserManager<ForumWebUser> userManager)
         {
             _postGateway = postGateway;
             _userManager = userManager;
             _commentGateway = commentGateway;
-            _subCatGateway = subCatGateway;
         }
 
         public Post Post { get; set; }
@@ -34,12 +32,19 @@ namespace ForumWeb.Pages
         public List<Comment> CommentList { get; set; }
 
         public ForumWebUser CurrentUser { get; set; }
+        public Guid PostId { get; set; }
+
 
         public async Task OnGetAsync(Guid postId)
         {
             Post = await _postGateway.GetOnePostByPostId(postId);
 
+            CommentList = await _commentGateway.GetCommentsByPostId(postId);
+            PostId = postId;
+
+
             CurrentUser = await _userManager.GetUserAsync(User);
+
         }
 
         public async Task<IActionResult> OnPostAsync()

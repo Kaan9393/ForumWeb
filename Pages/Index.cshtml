@@ -1,9 +1,25 @@
 ﻿@page
+@using Microsoft.AspNetCore.Identity;
+@using ForumWeb.Areas.Identity.Data;
 @model IndexModel
+@inject SignInManager<ForumWebUser> SignInManager
+@inject UserManager<ForumWebUser> UserManager
+
 
 @{
     ViewData["Title"] = "Home page";
 }
+
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <p>Du är inloggad som @User.Identity.Name</p>
+}
+else
+{
+    <p>Logga in för att göra inlägg</p>
+}
+
 
 <div class="row">
     <div class="col-12">
@@ -16,6 +32,5 @@
 
 
     </div>
-
-
 </div>
+

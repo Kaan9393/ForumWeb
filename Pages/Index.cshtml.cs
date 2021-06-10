@@ -18,11 +18,15 @@ namespace ForumWeb.Pages
     public class IndexModel : PageModel
     {
         private readonly ICategory _categoryGateway;
+        private readonly UserManager<ForumWebUser> _userManager;
 
-        public IndexModel(ICategory categoryGateway)
+        public IndexModel(ICategory categoryGateway, UserManager<ForumWebUser> userManager)
         {
             _categoryGateway = categoryGateway;
+            _userManager = userManager;
         }
+
+        public ForumWebUser CurrentUser { get; set; }
 
         public List<Category> Categories { get; set; }
 

@@ -16,6 +16,7 @@
 <div>
     @foreach (var post in Model.PostList)
     {
+     
         <img style="width:50px; height:50px; object-fit:cover" src="data:image/*;base64,@(Convert.ToBase64String(Model.CurrentUser.ProfileImage))">
         <a asp-page="CommentPage" asp-route-postId="@post.Id">   <h5>@post.Text</h5> </a>
         <p>@post.Date</p>

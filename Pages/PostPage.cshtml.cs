@@ -27,21 +27,29 @@ namespace ForumWeb.Pages
         [BindProperty]
         public Post NewPost { get; set; }
 
+        //Användaren som gjort posten
         public ForumWebUser CurrentUser { get; set; }
+
+
+
         public Guid SubCatId { get; set; }
+        public string UserId { get; set; }
 
         public async Task OnGetAsync(Guid subCategoryId)
         {
             PostList = await _postGateway.GetPostsBySubCategoryId(subCategoryId);
-
             SubCatId = subCategoryId;
+
             CurrentUser = await _userManager.GetUserAsync(User);
+
+
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
             NewPost.Date = DateTime.Now;
             NewPost.Id = Guid.NewGuid();
+
             //NewPost.User = Guid.NewGuid();
             await _postGateway.PostPosts(NewPost);
 

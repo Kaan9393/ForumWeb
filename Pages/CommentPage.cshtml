@@ -4,6 +4,29 @@
 }
 
 <div>
-  <p>@Model.Post.Text</p>
+    <h3>@Model.Post.Text</h3>
+</div>
+<br />
+
+<h1>Create Commets</h1>
+<form method="post">
+    <label asp-for="NewComment.Text">New Comment</label> <br />
+    <input asp-for="NewComment.Text" />
+    <input type="hidden" asp-for="NewComment.User" value="@Model.CurrentUser.Id" />
+    <input type="hidden" asp-for="NewComment.PostId" value="@Model.PostId" />
+    <input type="submit" value="Save" />
+
+
+</form>
+
+
+
+<div>
+    @foreach (var comments in Model.CommentList)
+    {
+        <img style="width:30px; height:30px; object-fit:cover" src="data:image/*;base64,@(Convert.ToBase64String(Model.CurrentUser.ProfileImage))">
+        <p>@Model.CurrentUser.NickName</p>
+        <h6>@comments.Text</h6>
+    }
 
 </div>
