@@ -20,6 +20,7 @@ namespace ForumWeb.Pages
         {
             _postGateway = postGateway;
             _userManager = userManager;
+            UserList = new List<UserModel>();
         }
 
         public List<Post> PostList { get; set; }
@@ -27,13 +28,20 @@ namespace ForumWeb.Pages
         [BindProperty]
         public Post NewPost { get; set; }
 
-        //Användaren som gjort posten
         public ForumWebUser CurrentUser { get; set; }
 
-
-
         public Guid SubCatId { get; set; }
-        public string UserId { get; set; }
+
+        public List<UserModel> UserList { get; set; }
+
+        public class UserModel
+        {
+            public Guid Id { get; set; }
+            public ForumWebUser CreatedUser { get; set; }
+            public DateTime Date { get; set; }
+            public string Text { get; set; }
+
+        }
 
         public async Task OnGetAsync(Guid subCategoryId)
         {
@@ -42,6 +50,17 @@ namespace ForumWeb.Pages
 
             CurrentUser = await _userManager.GetUserAsync(User);
 
+            foreach (var item in PostList)
+            {
+                var itemsInPostList = new UserModel
+                {
+                    Id = item.Id,
+                    CreatedUser = await _userManager.FindByIdAsync(item.User.ToString()),
+                    Date = item.Date,
+                    Text = item.Text
+                };
+                UserList.Add(itemsInPostList);
+            }
 
         }
 
