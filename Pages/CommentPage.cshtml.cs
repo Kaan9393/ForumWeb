@@ -23,6 +23,7 @@ namespace ForumWeb.Pages
             _postGateway = postGateway;
             _userManager = userManager;
             _commentGateway = commentGateway;
+            UserList = new List<UserModel>();
         }
 
         public Post Post { get; set; }
@@ -34,17 +35,34 @@ namespace ForumWeb.Pages
         public ForumWebUser CurrentUser { get; set; }
         public Guid PostId { get; set; }
 
+        public List<UserModel> UserList { get; set; }
+        public class UserModel
+        {
+            public Guid Id { get; set; }
+            public ForumWebUser CreatedUser { get; set; }
+            public DateTime Date { get; set; }
+            public string Text { get; set; }
+        }
 
         public async Task OnGetAsync(Guid postId)
         {
-            Post = await _postGateway.GetOnePostByPostId(postId);
-
-            CommentList = await _commentGateway.GetCommentsByPostId(postId);
             PostId = postId;
-
+            Post = await _postGateway.GetOnePostByPostId(postId);
+            CommentList = await _commentGateway.GetCommentsByPostId(postId);
 
             CurrentUser = await _userManager.GetUserAsync(User);
 
+            foreach (var item in CommentList)
+            {
+                var itemsInCommentList = new UserModel
+                {
+                    Id = item.Id,
+                    CreatedUser = await _userManager.FindByIdAsync(item.User.ToString()),
+                    Date = item.Date,
+                    Text = item.Text
+                };
+                UserList.Add(itemsInCommentList);
+            }
         }
 
         public async Task<IActionResult> OnPostAsync()
