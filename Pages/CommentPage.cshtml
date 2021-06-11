@@ -1,32 +1,60 @@
 ﻿@page
+@using Microsoft.AspNetCore.Identity;
+@using ForumWeb.Areas.Identity.Data;
 @model ForumWeb.Pages.CommentPageModel
+@inject SignInManager<ForumWebUser> SignInManager
+@inject UserManager<ForumWebUser> UserManager
 @{
 }
 
-<div>
-    <h3>@Model.Post.Text</h3>
-</div>
-<br />
 
-<h1>Create Commets</h1>
-<form method="post">
-    <label asp-for="NewComment.Text">New Comment</label> <br />
-    <input asp-for="NewComment.Text" />
-    <input type="hidden" asp-for="NewComment.User" value="@Model.CurrentUser.Id" />
-    <input type="hidden" asp-for="NewComment.PostId" value="@Model.PostId" />
-    <input type="submit" value="Save" />
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
 
-</form>
+<div class="container">
+    <h2 class="text-center">@Model.Post.Text</h2>
 
-
-
-<div>
     @foreach (var comments in Model.UserList)
     {
-        <img style="width:30px; height:30px; object-fit:cover" src="data:image/*;base64,@(Convert.ToBase64String(comments.CreatedUser.ProfileImage))">
-        <p>@comments.CreatedUser.NickName</p>
-        <h6>@comments.Text</h6>
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-2">
+                        <img style="width:150px; height:150px; object-fit:cover" src="data:image/*;base64,@(Convert.ToBase64String(comments.CreatedUser.ProfileImage))">
+                        <p class="text-secondary text-center">@comments.Date</p>
+                    </div>
+                    <div class="col-md-10">
+                        <p>
+                            <a class="float-left"><strong>@comments.CreatedUser.NickName</strong></a>
+                        </p>
+                        <div class="clearfix"></div>
+                        <p>@comments.Text</p>
+                    </div>
+                </div>
+            </div>
+        </div>
     }
-
 </div>
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <div class="container">
+        <h3>Create a new Comment</h3>
+        <form method="post">
+            <label asp-for="NewComment.Text"></label> <br />
+            <input asp-for="NewComment.Text" />
+            <input type="hidden" asp-for="NewComment.User" value="@Model.CurrentUser.Id" />
+            <input type="hidden" asp-for="NewComment.PostId" value="@Model.PostId" />
+            <input type="submit" value="Reply" />
+        </form>
+    </div>
+}
+else
+{
+    <div class="container">
+        <h1>Log in to write a comment </h1>
+    </div>
+}
+

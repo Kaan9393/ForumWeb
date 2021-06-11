@@ -10,6 +10,38 @@
     ViewData["Title"] = "Home page";
 }
 
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+
+
+<div class="container center">
+    <div class="row">
+        <div class="col-lg-12">
+            <div>
+                <i class="fa fa-globe fa-4x"></i>
+            </div>
+            <h1>Welcome to my forum</h1>
+            <span>Feel free to choose category you are interested in!</span>
+        </div>
+    </div> <br /> <br />
+
+
+    <div class="row">
+        <div class="col-mg-9">
+            <h2>Categories</h2> <br />
+            @foreach (var category in Model.Categories)
+            {
+                <div class="row">
+                    <div class="col-md-9">
+                        <a asp-page="SubCatPage" asp-route-categoryId="@category.Id"> <h4>@category.Text</h4> </a> <br />
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+<br /> <br /> <br /> <br /> <br />
+
+
 
 @if (SignInManager.IsSignedIn(User))
 {
@@ -21,16 +53,4 @@ else
 }
 
 
-<div class="row">
-    <div class="col-12">
-        <h1>Kaans Forum</h1> <br />
-
-        @foreach (var category in Model.Categories)
-        {
-            <a asp-page="SubCatPage" asp-route-categoryId="@category.Id"> <h5>@category.Text</h5> </a>
-        }
-
-
-    </div>
-</div>
 
