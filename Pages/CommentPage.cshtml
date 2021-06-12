@@ -24,6 +24,7 @@
                     <div class="col-md-2">
                         <img style="width:150px; height:150px; object-fit:cover" src="data:image/*;base64,@(Convert.ToBase64String(comments.CreatedUser.ProfileImage))">
                         <p class="text-secondary text-center">@comments.Date</p>
+                        <a class="text-center btn-danger btn-sm" asp-page="Report" asp-route-CommentId="@comments.Id">Report</a>
                     </div>
                     <div class="col-md-10">
                         <p>

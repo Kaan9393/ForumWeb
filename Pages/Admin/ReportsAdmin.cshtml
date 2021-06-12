@@ -1,0 +1,29 @@
+﻿@page
+@model ForumWeb.Pages.Admin.ReportsAdminModel
+@{
+}
+
+
+
+
+@foreach (var item in Model.Reports)
+{
+    <div class="container">
+        @if (item.CommentId != Guid.Empty)
+        {
+            <h3>New report for a Comment</h3>
+
+            <p>@item.Text</p>
+            <p>@item.Date</p>
+            <p>@item.Id</p>
+        }
+        else if (item.PostId != Guid.Empty)
+        {
+            <h3>New report a Post</h3>
+
+            <p>@item.Text</p>
+            <p>@item.Date</p>
+            <p>@item.Id</p>
+        }
+    </div>
+}

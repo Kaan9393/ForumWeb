@@ -29,6 +29,12 @@ namespace ForumWeb.Gateway
             return JsonSerializer.Deserialize<List<Comment>>(apiResponse);
         }
 
+        public async Task<Comment> GetOneCommentById(Guid commentId)
+        {
+            var response = await _httpClient.GetAsync("https://localhost:44341/api/Comments" + "/" + commentId);
+            string apiResponse = await response.Content.ReadAsStringAsync();
+            return JsonSerializer.Deserialize<Comment>(apiResponse);
+        }
 
         //Ny*******
         public async Task<List<Comment>> GetCommentsByPostId(Guid postId)

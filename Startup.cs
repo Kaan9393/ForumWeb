@@ -42,6 +42,9 @@ namespace ForumWeb
             services.AddHttpClient<CommentGateWay>();
             services.AddScoped<IComment, CommentGateWay>();
 
+            services.AddHttpClient<ReportGateWay>();
+            services.AddScoped<IReport, ReportGateWay>();
+
             services.AddAuthorization(options =>
             {
                 options.AddPolicy("BeAdmin",

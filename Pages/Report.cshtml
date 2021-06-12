@@ -1,0 +1,82 @@
+﻿@page
+@using Microsoft.AspNetCore.Identity;
+@using ForumWeb.Areas.Identity.Data;
+@inject SignInManager<ForumWebUser> SignInManager
+@inject UserManager<ForumWebUser> UserManager
+@model ForumWeb.Pages.ReportModel
+@{
+}
+
+
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<div class="container">
+    <h2 class="text-center">Report</h2>
+
+    @if (SignInManager.IsSignedIn(User))
+    {
+        <div class="container">
+            <h3>Create a new Report</h3>
+            <form method="post">
+                <label asp-for="NewReport.Text"></label> <br />
+                <input asp-for="NewReport.Text" />
+                <input type="hidden" asp-for="NewReport.User" value="@Model.CurrentUser.Id" />
+                <input type="hidden" asp-for="NewReport.PostId" value="@Model.PostId" />
+                <input type="hidden" asp-for="NewReport.CommentId" value="@Model.CommentId" />
+                <input type="submit" value="Send" />
+            </form>
+        </div>
+    }
+    else
+    {
+        <div class="container">
+            <h1>Log in to write a comment </h1>
+        </div>
+    }
+
+
+    @if (Model.CommentId != Guid.Empty)
+    {
+
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-2">
+                        <p>Report for Comment</p>
+                        @*<p class="text-secondary text-center">@Model.NewReport.Date</p>*@
+                    </div>
+                    <div class="col-md-10">
+                        <p>
+                            <a class="float-left"><strong>@Model.CurrentUser.NickName</strong></a>
+                        </p>
+                        <div class="clearfix"></div>
+                        <p>@Model.NewComment.Text</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+ 
+    else if (Model.PostId != Guid.Empty)
+    {
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-2">
+                        <p>Report for Post</p>
+                        @*<p class="text-secondary text-center">@Model.NewReport.Date</p>*@
+                    </div>
+                    <div class="col-md-10">
+                        <p>
+                            <a class="float-left"><strong>@Model.CurrentUser.NickName</strong></a>
+                        </p>
+                        <div class="clearfix"></div>
+                        <p>@Model.NewPost.Text</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>

@@ -9,6 +9,7 @@ namespace ForumWeb.Models.IModels
     {
         Task<List<Comment>> GetComments();
         Task<List<Comment>> GetCommentsByPostId(Guid postId);
+        Task<Comment> GetOneCommentById(Guid commentId);
         Task<Comment> PostComment(Comment comment);
         Task PutComment(Guid editId, Comment comment);
         Task DeleteComment(Guid deleteId);
