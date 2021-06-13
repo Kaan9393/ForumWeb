@@ -10,6 +10,7 @@
 
         <li class="nav-item">
             <a id="manage" class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hey @UserManager.GetUserName(User)!</a>
+
         </li>
         @if (User.IsInRole("Admin"))
         {
@@ -18,6 +19,9 @@
             </li>
 
         }
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-page="MessageUser" asp-route-userId="@UserManager.GetUserId(User)">Messages</a>
+        </li>
         <li class="nav-item">
 
             <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/Index", new { area = "" })">

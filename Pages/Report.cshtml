@@ -31,52 +31,60 @@
     }
     else
     {
+        
+    }
+
+
+    @if (SignInManager.IsSignedIn(User))
+    {
+
+        @if (Model.CommentId != Guid.Empty)
+        {
+
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <p>Report for Comment</p>
+                            @*<p class="text-secondary text-center">@Model.NewReport.Date</p>*@
+                        </div>
+                        <div class="col-md-10">
+                            <p>
+                                <a class="float-left"><strong>@Model.CurrentUser.NickName</strong></a>
+                            </p>
+                            <div class="clearfix"></div>
+                            <p>@Model.NewComment.Text</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+
+        else if (Model.PostId != Guid.Empty)
+        {
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <p>Report for Post</p>
+                            @*<p class="text-secondary text-center">@Model.NewReport.Date</p>*@
+                        </div>
+                        <div class="col-md-10">
+                            <p>
+                                <a class="float-left"><strong>@Model.CurrentUser.NickName</strong></a>
+                            </p>
+                            <div class="clearfix"></div>
+                            <p>@Model.NewPost.Text</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+    else
+    {
         <div class="container">
-            <h1>Log in to write a comment </h1>
-        </div>
-    }
-
-
-    @if (Model.CommentId != Guid.Empty)
-    {
-
-        <div class="card">
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-md-2">
-                        <p>Report for Comment</p>
-                        @*<p class="text-secondary text-center">@Model.NewReport.Date</p>*@
-                    </div>
-                    <div class="col-md-10">
-                        <p>
-                            <a class="float-left"><strong>@Model.CurrentUser.NickName</strong></a>
-                        </p>
-                        <div class="clearfix"></div>
-                        <p>@Model.NewComment.Text</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    }
- 
-    else if (Model.PostId != Guid.Empty)
-    {
-        <div class="card">
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-md-2">
-                        <p>Report for Post</p>
-                        @*<p class="text-secondary text-center">@Model.NewReport.Date</p>*@
-                    </div>
-                    <div class="col-md-10">
-                        <p>
-                            <a class="float-left"><strong>@Model.CurrentUser.NickName</strong></a>
-                        </p>
-                        <div class="clearfix"></div>
-                        <p>@Model.NewPost.Text</p>
-                    </div>
-                </div>
-            </div>
+            <h1>Log in to send a report </h1>
         </div>
     }
 </div>

@@ -45,6 +45,9 @@ namespace ForumWeb
             services.AddHttpClient<ReportGateWay>();
             services.AddScoped<IReport, ReportGateWay>();
 
+            services.AddHttpClient<MessageGateWay>();
+            services.AddScoped<IMessage, MessageGateWay>();
+
             services.AddAuthorization(options =>
             {
                 options.AddPolicy("BeAdmin",

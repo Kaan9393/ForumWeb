@@ -1,0 +1,21 @@
+﻿@page
+@model ForumWeb.Pages.MessageSendToUserModel
+@{
+}
+
+<div class="container">
+    <div class="row">
+        <h3>Create message to User</h3>
+        <form method="post">
+            <label asp-for="NewMessage.Text">New Message</label> <br />
+            <input type="hidden" asp-for="NewMessage.MessageToUser" value="@Model.UserId" />
+            <input type="hidden" asp-for="NewMessage.MessageFromUser" value="@Model.CurrentUser.Id" />
+            <p>To [@Model.MessageCurrentUserId.NickName]</p>
+            <input style="width: 700px; height: 50px" asp-for="NewMessage.Text" />
+            <input type="submit" value="Send" />
+
+        </form>
+    </div>
+</div>
+
+

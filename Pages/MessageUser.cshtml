@@ -1,0 +1,20 @@
+﻿@page
+@using Microsoft.AspNetCore.Identity;
+@using ForumWeb.Areas.Identity.Data;
+@inject SignInManager<ForumWebUser> SignInManager
+@inject UserManager<ForumWebUser> UserManager
+@model ForumWeb.Pages.MessageUserModel
+@{
+}
+
+
+
+    <div class="container">
+        @foreach (var item in Model.MessageList)
+        {
+            <p>From user: @item.FromUser.NickName</p>
+            <p>Date: @item.Date</p>
+            <p>Message: @item.Text</p>
+            <br /> <br />
+        }
+    </div>
