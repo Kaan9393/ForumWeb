@@ -26,6 +26,9 @@ namespace ForumWeb.Pages
             UserList = new List<UserModel>();
         }
 
+        [BindProperty(SupportsGet = true)]
+        public Guid DeleteCommentId { get; set; }
+
         public Post Post { get; set; }
 
         [BindProperty]
@@ -44,8 +47,16 @@ namespace ForumWeb.Pages
             public string Text { get; set; }
         }
 
-        public async Task OnGetAsync(Guid postId)
+        public async Task<IActionResult> OnGetAsync(Guid postId)
         {
+            if (DeleteCommentId != Guid.Empty)
+            {
+                await _commentGateway.DeleteComment(DeleteCommentId);
+                return RedirectToPage("Index");
+            }
+
+
+
             PostId = postId;
             Post = await _postGateway.GetOnePostByPostId(postId);
             CommentList = await _commentGateway.GetCommentsByPostId(postId);
@@ -63,6 +74,8 @@ namespace ForumWeb.Pages
                 };
                 UserList.Add(itemsInCommentList);
             }
+
+            return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()

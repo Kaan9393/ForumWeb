@@ -23,6 +23,9 @@ namespace ForumWeb.Pages
             UserList = new List<UserModel>();
         }
 
+        [BindProperty(SupportsGet = true)]
+        public Guid DeletePostId { get; set; }
+
         public List<Post> PostList { get; set; }
 
         [BindProperty]
@@ -43,8 +46,14 @@ namespace ForumWeb.Pages
 
         }
 
-        public async Task OnGetAsync(Guid subCategoryId)
+        public async Task<IActionResult> OnGetAsync(Guid subCategoryId)
         {
+            if (DeletePostId != Guid.Empty)
+            {
+                await _postGateway.DeletePost(DeletePostId);
+                return RedirectToPage("Index");
+            }
+
             PostList = await _postGateway.GetPostsBySubCategoryId(subCategoryId);
             SubCatId = subCategoryId;
 
@@ -62,6 +71,7 @@ namespace ForumWeb.Pages
                 UserList.Add(itemsInPostList);
             }
 
+            return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()

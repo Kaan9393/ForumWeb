@@ -9,12 +9,26 @@
 
 
 
-    <div class="container">
-        @foreach (var item in Model.MessageList)
-        {
-            <p>From user: @item.FromUser.NickName</p>
-            <p>Date: @item.Date</p>
-            <p>Message: @item.Text</p>
-            <br /> <br />
-        }
-    </div>
+<div class="container">
+    @foreach (var item in Model.MessageList.OrderBy(i => i.Date))
+    {
+        <p>From user: @item.FromUser.NickName</p>
+        <p>Date: @item.Date</p>
+        <p>Message: @item.Text</p>
+        <br /> <br />
+    }
+</div>
+
+@*<div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <h4>Reply Message</h4>
+            </div>
+            <form method="post">
+                <input style="width:700px; height:50px" asp-for="NewMessage.Text" />
+                <input type="hidden" asp-for="UserMessage.FromUser" value="@Model.NewMessage.MessageToUser" />
+                <input type="hidden" asp-for="UserMessage.CurrentUser" value="@Model.NewMessage.MessageFromUser" />
+                <input type="submit" value="Reply" />
+            </form>
+        </div>
+    </div>*@

@@ -35,18 +35,34 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-2">
-                        <img style="width:50px; height:50px; object-fit:cover" src="data:image/*;base64,@(Convert.ToBase64String(post.CreatedUser.ProfileImage))">
-                        <p class="text-secondary text-center">@post.Date</p>
-                        <a class="btn btn-danger btn-sm m-auto" asp-page="Report" asp-route-PostId="@post.Id">Report</a>
+
+                        <div class="row">
+                            <img style="width:50px; height:50px; object-fit:cover" src="data:image/*;base64,@(Convert.ToBase64String(post.CreatedUser.ProfileImage))">
+                            <p class="text-secondary text-center">@post.Date</p>
+                        </div>
+                        <div class="row">
+                            <a class="btn btn-dark btn-sm" asp-page="MessageSendToUser" asp-route-userId="@post.CreatedUser.Id">Send private message</a>
+                        </div> <br />
+                        <div class="row">
+                            <a class="btn btn-danger btn-sm" asp-page="Report" asp-route-PostId="@post.Id">Report</a>
+                        </div>
                     </div>
-                    <div class="col-md-10">
+                    <div class="col-md-8">
                         <p>
                             <a class="float-left"><strong>Created by: @post.CreatedUser.NickName</strong></a>
-                            <a class="btn btn-dark btn-sm m-auto" asp-page="MessageSendToUser" asp-route-userId="@post.CreatedUser.Id">Send private message</a>
                         </p> <br />
                         <div class="clearfix"></div>
                         <a asp-page="CommentPage" asp-route-postId="@post.Id">   <h5>@post.Text</h5> </a>
                     </div>
+                    @if (UserManager.GetUserId(Model.User) == post.CreatedUser.Id)
+                    {
+                        <div class="col-md-2">
+                            <div class="row float-right">
+                                <a class="btn btn-info btn-sm" href="?DeletePostId=@post.Id">Delete post</a>
+                            </div>
+                        </div>
+                    }
+
                 </div>
             </div>
         </div>

@@ -30,9 +30,16 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-2">
-                        <img style="width:100px; height:100px; object-fit:cover" src="data:image/*;base64,@(Convert.ToBase64String(comments.CreatedUser.ProfileImage))">
-                        <p class="text-secondary text-center">@comments.Date</p>
-                        <a class="text-center btn-danger btn-sm" asp-page="Report" asp-route-CommentId="@comments.Id">Report</a>
+                        <div class="row">
+                            <img style="width:80px; height:80px; object-fit:cover" src="data:image/*;base64,@(Convert.ToBase64String(comments.CreatedUser.ProfileImage))">
+                            <p class="text-secondary text-center">@comments.Date</p>
+                        </div>
+                        <div class="row">
+                            <a class="text-center btn-danger btn-sm mb-2" asp-page="Report" asp-route-CommentId="@comments.Id">Report</a> <br />
+                        </div>
+                        <div class="row">
+                            <a class="btn btn-dark btn-sm" asp-page="MessageSendToUser" asp-route-userId="@comments.CreatedUser.Id">Send private message</a>
+                        </div>
                     </div>
                     <div class="col-md-8">
                         <p>
@@ -41,6 +48,14 @@
                         <div class="clearfix"></div>
                         <p>@comments.Text</p>
                     </div>
+                    @if (UserManager.GetUserId(Model.User) == comments.CreatedUser.Id)
+                    {
+                        <div class="col-md-2">
+                            <div class="row float-right">
+                                <a class="btn btn-info btn-sm" href="?DeleteCommentId=@comments.Id">Delete comment</a>
+                            </div>
+                        </div>
+                    }
                 </div>
             </div>
         </div>

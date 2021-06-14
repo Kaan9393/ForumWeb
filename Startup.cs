@@ -4,6 +4,7 @@ using ForumWeb.Gateway;
 using ForumWeb.Models.IModels;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -29,9 +30,9 @@ namespace ForumWeb
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            
+
             services.AddHttpClient<CategoryGateWay>();
-            services.AddScoped<ICategory,CategoryGateWay>();
+            services.AddScoped<ICategory, CategoryGateWay>();
 
             services.AddHttpClient<SubCategoryGateWay>();
             services.AddScoped<ISubCategory, SubCategoryGateWay>();
@@ -48,13 +49,22 @@ namespace ForumWeb
             services.AddHttpClient<MessageGateWay>();
             services.AddScoped<IMessage, MessageGateWay>();
 
+            //COOKIES
+            services.Configure<CookiePolicyOptions>(options =>
+            {
+                options.CheckConsentNeeded = context => true;
+                options.MinimumSameSitePolicy = SameSiteMode.None;
+            });
+           
+
             services.AddAuthorization(options =>
             {
                 options.AddPolicy("BeAdmin",
                     policy => policy.RequireRole("Admin"));
             });
 
-            services.AddRazorPages(options => {
+            services.AddRazorPages(options =>
+            {
                 options.Conventions.AuthorizeFolder("/Admin", "BeAdmin");
             });
         }
@@ -75,6 +85,7 @@ namespace ForumWeb
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            app.UseCookiePolicy();
 
             app.UseRouting();
 
