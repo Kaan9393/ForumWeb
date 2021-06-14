@@ -6,7 +6,7 @@
 
 
 
-@foreach (var item in Model.Reports)
+@foreach (var item in Model.Reports.OrderBy(i => i.Date))
 {
     <div class="container">
         @if (item.CommentId != Guid.Empty)

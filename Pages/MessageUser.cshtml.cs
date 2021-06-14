@@ -27,10 +27,10 @@ namespace ForumWeb.Pages
         public ForumWebUser UserNow { get; set; }
 
         [BindProperty]
-        public Message NewMessage { get; set; }
+        public Message ReplyMessage { get; set; }
 
         [BindProperty]
-        public UserMessageModel UserMessage { get; set; }
+        public Guid FromUserId { get; set; }
 
         public List<UserMessageModel> MessageList { get; set; }
 
@@ -65,14 +65,16 @@ namespace ForumWeb.Pages
             return Page();
         }
 
-        //public async Task<IActionResult> OnPostAsync()
-        //{
-        //    NewMessage.Id = Guid.NewGuid();
-        //    NewMessage.Date = DateTime.Now;
+        public async Task<IActionResult> OnPostAsync()
+        {
+            ReplyMessage.Id = Guid.NewGuid();
+            ReplyMessage.Date = DateTime.Now;
 
-        //    await _messageGateway.PostMessage(NewMessage);
+            ReplyMessage.MessageFromUser = FromUserId;
 
-        //    return RedirectToPage();
-        //}
+            await _messageGateway.PostMessage(ReplyMessage);
+
+            return RedirectToPage();
+        }
     }
 }
