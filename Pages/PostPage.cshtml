@@ -61,7 +61,7 @@
                         <a asp-page="CommentPage" asp-route-postId="@post.Id">   <h5>@post.Text</h5> </a>
                     </div>
 
-                    @if (UserManager.GetUserId(Model.User) == post.CreatedUser.Id)
+                    @if (UserManager.GetUserId(Model.User) == post.CreatedUser.Id || UserManager.IsInRoleAsync(UserManager.GetUserAsync(Model.User).Result, "Admin").Result)
                     {
                         <div class="col-md-2">
                             <div class="row float-right">
