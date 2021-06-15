@@ -12,28 +12,22 @@
 <div class="container">
     @foreach (var item in Model.MessageList.OrderBy(i => i.Date))
     {
-        <p>From user: @item.FromUser.NickName</p>
-        <p>Date: @item.Date</p>
-        <p>Message: @item.Text</p>
-        <br /> <br />
 
+        <div class="card" style="height:150px; width:800px">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
 
-
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-6">
-                    <h4>Reply Message</h4>
+                        <p>From user: @item.FromUser.NickName</p>
+                        <p>Date: @item.Date</p>
+                        <p>Message: @item.Text</p>
+                        <br /> <br />
+                    </div>
                 </div>
-                <form method="post">
-                    <input style="width:700px; height:50px" asp-for="ReplyMessage.Text" />
-                    <input type="hidden" asp-for="ReplyMessage.MessageFromUser" value="@item.CurrentUser" />
-                    <input type="hidden" asp-for="ReplyMessage.MessageToUser" value="@item.FromUser" />
-                    <input type="submit" value="Reply" />
-                </form>
             </div>
         </div>
-
     }
+
 </div>
 
 

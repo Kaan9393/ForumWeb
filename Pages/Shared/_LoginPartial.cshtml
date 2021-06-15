@@ -9,7 +9,7 @@
     {
 
         <li class="nav-item">
-            <a id="manage" class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hey @UserManager.GetUserName(User)!</a>
+            <a id="manage" class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hey @UserManager.GetUserAsync(User).Result.NickName!</a>
 
         </li>
         @if (User.IsInRole("Admin"))
@@ -23,7 +23,7 @@
 
         }
         <li class="nav-item">
-            <a class="nav-link text-dark" asp-page="MessageUser" asp-route-userId="@UserManager.GetUserId(User)">Messages</a>
+            <a class="nav-link text-dark" asp-page="/MessageUser" asp-route-userId="@UserManager.GetUserId(User)">Messages</a>
         </li>
         <li class="nav-item">
 

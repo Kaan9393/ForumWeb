@@ -21,20 +21,25 @@ namespace ForumWeb.Pages
             _messageGateway = messageGateway;
             _userManager = userManager;
             MessageList = new List<UserMessageModel>();
+            
         }
 
         public Guid UserId { get; set; }
         public ForumWebUser UserNow { get; set; }
 
-        [BindProperty]
-        public Message ReplyMessage { get; set; }
-
-        [BindProperty]
-        public Guid FromUserId { get; set; }
-
         public List<UserMessageModel> MessageList { get; set; }
 
+
         public class UserMessageModel
+        {
+            public Guid Id { get; set; }
+            public ForumWebUser CurrentUser { get; set; }
+            public ForumWebUser FromUser { get; set; }
+            public DateTime Date { get; set; }
+            public string Text { get; set; }
+        }
+
+        public class ToUserMessageModel
         {
             public Guid Id { get; set; }
             public ForumWebUser CurrentUser { get; set; }
@@ -46,6 +51,8 @@ namespace ForumWeb.Pages
         public async Task<IActionResult> OnGetAsync(Guid userId)
         {
             UserId = userId;
+
+            UserNow = await _userManager.GetUserAsync(User);
 
             var messageList = await _messageGateway.GetMessageByUserId(userId);
 
@@ -61,20 +68,7 @@ namespace ForumWeb.Pages
                 };
                 MessageList.Add(itemsInMessageList);
             }
-
             return Page();
-        }
-
-        public async Task<IActionResult> OnPostAsync()
-        {
-            ReplyMessage.Id = Guid.NewGuid();
-            ReplyMessage.Date = DateTime.Now;
-
-            ReplyMessage.MessageFromUser = FromUserId;
-
-            await _messageGateway.PostMessage(ReplyMessage);
-
-            return RedirectToPage();
         }
     }
 }
