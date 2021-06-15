@@ -50,9 +50,6 @@
 
 @if (SignInManager.IsSignedIn(User))
 {
-    <p>Du är inloggad som @User.Identity.Name</p>
+    <p>Logged in as: @User.Identity.Name</p>
 }
-else
-{
-    <p>Logga in för att göra inlägg</p>
-}
+

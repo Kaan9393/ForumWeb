@@ -55,13 +55,17 @@
                         <div class="clearfix"></div>
                         <p>@comments.Text</p>
                     </div>
-                    @if (UserManager.GetUserId(Model.User) == comments.CreatedUser.Id || UserManager.IsInRoleAsync(UserManager.GetUserAsync(Model.User).Result, "Admin").Result)
+                    @if (SignInManager.IsSignedIn(User))
                     {
-                        <div class="col-md-2">
-                            <div class="row float-right">
-                                <a class="btn btn-info btn-sm" href="?DeleteCommentId=@comments.Id">Delete comment</a>
+
+                        @if (UserManager.GetUserId(Model.User) == comments.CreatedUser.Id || UserManager.IsInRoleAsync(UserManager.GetUserAsync(Model.User).Result, "Admin").Result)
+                        {
+                            <div class="col-md-2">
+                                <div class="row float-right">
+                                    <a class="btn btn-info btn-sm" href="?DeleteCommentId=@comments.Id">Delete comment</a>
+                                </div>
                             </div>
-                        </div>
+                        }
                     }
                 </div>
             </div>
@@ -92,7 +96,7 @@
 else
 {
     <div class="container">
-        <h1>Log in to write a comment </h1>
+        <h3>Log in to write a comment </h3>
     </div>
 }
 

@@ -19,7 +19,7 @@
             <div>
                 <i class="fa fa-globe fa-4x"></i>
             </div>
-            <h1>Welcome to my forum</h1>
+            <h1>Welcome Global Forum</h1>
             <span>Feel free to choose category you are interested in!</span>
         </div>
     </div> <br /> <br />
@@ -45,12 +45,9 @@
 
 @if (SignInManager.IsSignedIn(User))
 {
-    <p>Du är inloggad som @User.Identity.Name</p>
+    <p>Logged in as: @User.Identity.Name</p>
 }
-else
-{
-    <p>Logga in för att göra inlägg</p>
-}
+
 
 
 

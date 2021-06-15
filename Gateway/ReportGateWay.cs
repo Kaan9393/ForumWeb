@@ -46,7 +46,7 @@ namespace ForumWeb.Gateway
 
         public async Task DeleteReport(Guid reportId)
         {
-            var response = await _httpClient.DeleteAsync("https://localhost:44341/api/Reports" + " /" + reportId);
+            var response = await _httpClient.DeleteAsync("https://localhost:44341/api/Reports" + " /" + reportId.ToString());
 
         }
     }
