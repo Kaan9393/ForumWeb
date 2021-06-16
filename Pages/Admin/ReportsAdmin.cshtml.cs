@@ -24,26 +24,24 @@ namespace ForumWeb.Pages.Admin
 
         public List<Report> Reports { get; set; }
 
-        [BindProperty]
+        [BindProperty(SupportsGet = true)]
         public Guid DeleteReportId { get; set; }
 
 
-        [BindProperty]
-        public Guid DeletePostId { get; set; }
-
         public async Task<IActionResult> OnGetAsync()
         {
+            if (DeleteReportId != Guid.Empty)
+            {
+                await _reportGateway.DeleteReport(DeleteReportId);
+                return RedirectToPage();
+            }
+
             Reports = await _reportGateway.GetReports();
+
+
 
             return Page();
         }
 
-        //public async Task<IActionResult> OnPostDeleteReportAsync()
-        //{
-        //    await _reportGateway.DeleteReport(DeleteReportId);
-
-        //    return RedirectToPage();
-
-        //}
     }
 }

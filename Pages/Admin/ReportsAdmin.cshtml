@@ -17,11 +17,8 @@
         <p>@item.Text</p>
         <p>@item.Date</p>
         <p>Report ID: @item.Id</p>
-        @*<form method="post" asp-page-handler="DeleteReport">
-            <input type="hidden" asp-for="DeleteReportId" value="@item.Id" />
-            <input type="submit" class="btn btn-danger btn-sm" value="Delete comment report" />
-        </form>*@
-        
+        <a class="btn btn-info btn-sm" href="?DeleteReportId=@item.Id">Delete post</a>
+
     }
     else if (item.PostId != Guid.Empty)
     {
@@ -30,7 +27,7 @@
         <p>@item.Text</p>
         <p>@item.Date</p>
         <p>Report ID: @item.Id</p>
-        @*<a class="btn btn-danger btn-sm" href="?DeletePostId=@item.PostId">Delete POST report</a>*@
+        <a class="btn btn-info btn-sm" href="?DeleteReportId=@item.Id">Delete post</a>
     }
 </div>
 }

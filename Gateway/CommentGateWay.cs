@@ -25,6 +25,7 @@ namespace ForumWeb.Gateway
         public async Task<List<Comment>> GetComments()
         {
             var response = await _httpClient.GetAsync("https://snackiskg.azurewebsites.net/api/Comments");
+            //var response = await _httpClient.GetAsync("https://localhost:44341/api/Comments");
             string apiResponse = await response.Content.ReadAsStringAsync();
             return JsonSerializer.Deserialize<List<Comment>>(apiResponse);
         }
@@ -32,6 +33,7 @@ namespace ForumWeb.Gateway
         public async Task<Comment> GetOneCommentById(Guid commentId)
         {
             var response = await _httpClient.GetAsync("https://snackiskg.azurewebsites.net/api/Comments" + "/" + commentId);
+            //var response = await _httpClient.GetAsync("https://localhost:44341/api/Comments" + "/" + commentId);
             string apiResponse = await response.Content.ReadAsStringAsync();
             return JsonSerializer.Deserialize<Comment>(apiResponse);
         }
@@ -40,12 +42,14 @@ namespace ForumWeb.Gateway
         public async Task<List<Comment>> GetCommentsByPostId(Guid postId)
         {
             var response = await _httpClient.GetAsync("https://snackiskg.azurewebsites.net/api/Comments" + "/PostId/" + postId);
+            //var response = await _httpClient.GetAsync("https://localhost:44341/api/Comments" + "/PostId/" + postId);
             string apiResponse = await response.Content.ReadAsStringAsync();
             return JsonSerializer.Deserialize<List<Comment>>(apiResponse);
         }
         public async Task<Comment> PostComment(Comment comment)
         {
             var response = await _httpClient.PostAsJsonAsync("https://snackiskg.azurewebsites.net/api/Comments", comment);
+            //var response = await _httpClient.PostAsJsonAsync("https://localhost:44341/api/Comments", comment);
             Comment returnValue = await response.Content.ReadFromJsonAsync<Comment>();
 
             return returnValue;
@@ -55,12 +59,14 @@ namespace ForumWeb.Gateway
         public async Task DeleteComment(Guid deleteId)
         {
             var response = await _httpClient.DeleteAsync("https://snackiskg.azurewebsites.net/api/Comments" + "/" + deleteId);
-            
+            //var response = await _httpClient.DeleteAsync("https://localhost:44341/api/Comments" + "/" + deleteId);
+
         }
 
         public async Task PutComment(Guid editId, Comment comment)
         {
             await _httpClient.PutAsJsonAsync("https://snackiskg.azurewebsites.net/api/Comments" + "/" + editId, comment);
+            //await _httpClient.PutAsJsonAsync("https://localhost:44341/api/Comments" + "/" + editId, comment);
         }
     }
 }

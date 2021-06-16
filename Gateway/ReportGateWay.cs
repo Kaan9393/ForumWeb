@@ -22,16 +22,19 @@ namespace ForumWeb.Gateway
             _httpClient = httpClient;
         }
 
+        
         public async Task<List<Report>> GetReports()
         {
             var response = await _httpClient.GetAsync("https://snackiskg.azurewebsites.net/api/Reports");
+            //var response = await _httpClient.GetAsync("https://localhost:44341/api/Reports");
             string apiResponse = await response.Content.ReadAsStringAsync();
             return JsonSerializer.Deserialize<List<Report>>(apiResponse);
         }
 
         public async Task<Report> GetReportById(Guid reportId)
         {
-             var response = await _httpClient.GetAsync("https://snackiskg.azurewebsites.net/api/Reports" + "/" + reportId);
+            var response = await _httpClient.GetAsync("https://snackiskg.azurewebsites.net/api/Reports" + "/" + reportId);
+            //var response = await _httpClient.GetAsync("https://localhost:44341/api/Reports" + "/" + reportId);
             string apiResponse = await response.Content.ReadAsStringAsync();
             return JsonSerializer.Deserialize<Report>(apiResponse);
         }
@@ -39,6 +42,7 @@ namespace ForumWeb.Gateway
         public async Task<Report> PostReport(Report report)
         {
             var response = await _httpClient.PostAsJsonAsync("https://snackiskg.azurewebsites.net/api/Reports", report);
+            //var response = await _httpClient.PostAsJsonAsync("https://localhost:44341/api/Reports", report);
             Report returnValue = await response.Content.ReadFromJsonAsync<Report>();
 
             return returnValue;
@@ -46,7 +50,8 @@ namespace ForumWeb.Gateway
 
         public async Task DeleteReport(Guid reportId)
         {
-            var response = await _httpClient.DeleteAsync("https://snackiskg.azurewebsites.net/api/Reports" + " /" + reportId.ToString());
+            var response = await _httpClient.DeleteAsync("https://snackiskg.azurewebsites.net/api/Reports" + "/" + reportId);
+            //var response = await _httpClient.DeleteAsync("https://localhost:44341/api/Reports" + "/" + reportId);
 
         }
     }
