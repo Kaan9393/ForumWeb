@@ -23,6 +23,7 @@ namespace ForumWeb.Pages
             UserList = new List<UserModel>();
         }
 
+
         [BindProperty(SupportsGet = true)]
         public Guid DeletePostId { get; set; }
 

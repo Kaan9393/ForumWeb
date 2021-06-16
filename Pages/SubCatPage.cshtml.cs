@@ -19,6 +19,7 @@ namespace ForumWeb.Pages
             _categoryGateway = categoryGateway;
             _subCatGateway = subCatGateway;
         }
+
         public List<Category> Categories { get; set; }
 
         public List<SubCategory> SubCategories { get; set; }
